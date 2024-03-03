@@ -1,70 +1,72 @@
 "use strict";
-// lesson01
 
-// значения для переменных
 let title = prompt("Как называется ваш проект?");
-let screens = prompt("Какие типы экранов нужно разработать?", "Простые, Сложные, Интерактивные");
-let screenPrice = +prompt("Сколько будет стоить данная работа?", 13200);
-let rollback = 66;
-let adaptive = confirm("Нужен ли адаптив на сайте?");
 
-// -----------------------------------------------------------------------------
-// lesson02
-// методы и свойства переменных
-// процент отката посреднику за работу
-let rollIntermediary = (fullPrice * (rollback/100));
+const screens = prompt("Какие типы экранов нужно разработать?", "Простые, Сложные, Интерактивные"); // тип экрана
+const screenPrice = +prompt("Сколько будет стоить данная работа?", 13200); // цена верстки
+const adaptive = confirm("Нужен ли адаптив на сайте?");
+const service1 = prompt("Какой дополнительный тип услуги нужен?");  // услуга 
+const servicePrice1 = +prompt("Сколько это будет стоить?"); // стоимость услуги
+const service2 = prompt("Какой дополнительный тип услуги нужен?"); // услуга 
+const servicePrice2 = +prompt("Сколько это будет стоить?"); // стоимость услуги
+const rollback = 66; // откат
 
-// -----------------------------------------------------------------------------
-// lesson03
-// Динамическая типизация данных. Условие, ветвления
-// Спросить у пользователя
-let service1 = prompt("Какой дополнительный тип услуги нужен?");
-let servicePrice1 = +prompt("Сколько это будет стоить?");
-let service2 = prompt("Какой дополнительный тип услуги нужен?");
-let servicePrice2 = +prompt("Сколько это будет стоить?");
-let discount = "";
+let fullPrice = 0; // итоговая стоимость
+let rollPec = fullPrice - (fullPrice * (rollback/100)); // процентная стоимость отката
+let servicePercentPrice = 0; // процентная стоимость услуги
+let allServicePrices = 0; // все цены на услуги
 
-// Вычислить итоговую стоимость работы
-let fullPrice = (screenPrice + servicePrice1 + servicePrice2);
-// Итоговая стоимость за вычетом отката
-let servicePercentPrice = Math.ceil(fullPrice - rollIntermediary);
+// общая стоимость доп.услуг
+const getAllServicePrices = function(servicePrice1, servicePrice2) {
+  return servicePrice1 + servicePrice2
+};
+// сумма верстки и доп.услуг
+function getFullPrise(screenPrice) {
+  return screenPrice + getAllServicePrices(servicePrice1, servicePrice2);
+};
+// редактирование название проекта
+const getTitle = function(title) {
+  if (title[0] === ' ') {
+    title = title.trimStart();
+    return title[0].toUpperCase() + title.slice(1);
+  }
+  return title.charAt(0).toUpperCase() + title.slice(1);
+};
 
-// Конструкция условий
-if (fullPrice > 30000) {
-  console.log("Даем скидку в 10%");
-} else if (fullPrice >= 15000 && fullPrice < 30000) {
-  discount = "Даем скидку в 5%";
-} else if (fullPrice <= 15000 && fullPrice > 0) {
-  discount = "Скидка не предусмотрена";
-} else {
-	discount = "Что то пошло не так";
+// итоговая стоимость за вычетом процента отката
+const getServicePercentPrices = function(fullPrice, rollPec) {
+  return Math.ceil(fullPrice - rollPec); 
+};
+
+const getRollbackMassege = function(price) {
+  if (price >= 30000) {
+    return "Даем скидку в 10%";
+  } else if (price >= 15000 && price < 30000) {
+    return "Даем скидку в 5%";
+  } else if (price < 15000 && price >= 0) {
+    return "Скидка не предусмотрена";
+  } else {
+    return "Что то пошло не так";
+  }
+};
+
+// показать тип
+const showTypeOf = function(typeVar) {
+  return `${typeVar}` + ' ' + typeof typeVar 
 }
 
-// Логи
+servicePercentPrice = getServicePercentPrices(fullPrice, rollPec); 
+allServicePrices = getAllServicePrices(servicePrice1, servicePrice2);
+fullPrice = getFullPrise(screenPrice);
 
-// тип данных
-console.log(typeof title);
-console.log(typeof fullPrice);
-console.log(typeof adaptive);
-// длина строки
-console.log(screens.length);
-// стоимость верстки экранов
-console.log(`Стоимость верстки экранов: ${screenPrice}$`);
-console.log(`Стоимость верстки экранов: ${fullPrice}$`);
-// привести строку к нижнему регистру и разбить на массив
-console.log(screens.toLowerCase().split(", "));
-// процент отката посреднику за работу
-console.log("Процент отката посреднику за работу: " + rollIntermediary);
+getTitle(title);
+showTypeOf(title); 
+showTypeOf(fullPrice); 
+showTypeOf(adaptive); 
 
-// lesson03
-// Спросить у пользователя
-console.log(service1);
-console.log(servicePrice1);
-console.log(service2);
-console.log(servicePrice2);
-// Вычислить итоговую стоимость работы
-console.log(fullPrice);
-// Итоговая стоимость за вычетом отката
-console.log(servicePercentPrice);
-
-console.log(discount);
+// стоимость за вычетом процента отката посреднику
+console.log(servicePercentPrice); 
+// сообщение о скидке пользователю
+console.log(getRollbackMassege(fullPrice)); 
+// вывод тип экранов
+console.log(screens.toLowerCase().split(", ")); 
