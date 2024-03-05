@@ -1,16 +1,17 @@
 "use strict";
 
-let title
-let screens // тип экрана
-let screenPrice // цена верстки
-let adaptive
+let title;
+let screens; // тип экрана
+let screenPrice; // цена верстки
+let adaptive;
+let service1; // услуга 1
+let service2; // услуга 2
+let fullPrice; // итоговая стоимость
+let rollPec; // процентная стоимость отката
+let servicePercentPrice;  // процентная стоимость услуги
+let allServicePrices; // все цены на услуги
 let rollback = 66; // откат
-let service1 // услуга 1
-let service2 // услуга 2
-let fullPrice // итоговая стоимость
-let rollPec // процентная стоимость отката
-let servicePercentPrice  // процентная стоимость услуги
-let allServicePrices // все цены на услуги
+
 
 const isNumber = function (num) {
   return !isNaN(parseFloat(num) && isFinite(num))
@@ -56,7 +57,7 @@ const getFullPrise = function () {
 };
 // итоговая стоимость за вычетом процента отката
 const getServicePercentPrices = function () {
-  return Math.ceil(fullPrice - (fullPrice *(rollback / 100))); 
+  return Math.ceil(fullPrice - (fullPrice *(rollback / 100)));
 };
 // редактирование название проекта
 const getTitle = function () {
