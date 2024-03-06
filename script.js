@@ -12,9 +12,9 @@ let servicePercentPrice;  // процентная стоимость услуг�
 let allServicePrices; // все цены на услуги
 let rollback = 66; // откат
 
-
+// проверка на число
 const isNumber = function (num) {
-  return !isNaN(parseFloat(num) && isFinite(num))
+  return !isNaN(parseFloat(num)) && isFinite(num)
 }
 
 // вопросы пользователю
@@ -28,12 +28,13 @@ const asking = function() {
  
   adaptive = confirm("Нужен ли адаптив на сайте?");
 }
-// валлидировать данные полученные из prompt то есть screenPrice
 // общая стоимость доп.услуг
 const getAllServicePrices = function () {
   let sum = 0;
+  let price = 0;
 
   for (let i = 0; i < 2; i++) {
+
     if (i === 0) {
       service1 = prompt("Какой дополнительный тип услуги нужен?", "метрика");
     } else if (i === 1) {
@@ -41,12 +42,16 @@ const getAllServicePrices = function () {
     }
 
     do {
-      sum += +prompt("Сколько это будет стоить?"); // стоимость услуги
-    } while (!isNumber(sum)) 
-    
+      price = +prompt("Сколько это будет стоить?"); // стоимость услуги
+    } while (!isNumber(price)) 
+
+    sum += price; 
+
   }
-  return sum
+  
+  return sum // числа
 };
+
 // показать тип
 const showTypeOf = function (typeVar) {
   return `${typeVar}` + ' ' + typeof typeVar 
