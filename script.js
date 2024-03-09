@@ -2,64 +2,77 @@
 
 const appData = {
   title: "",
-  screens: "", // тип экрана
+  screens: [], // тип экрана
   screenPrice: 0, // цена верстки
   adaptive: true,
-  service1: "", // услуга 1
-  service2: "", // услуга 2
+  services: {}, // услуги
   fullPrice: 0, // итоговая стоимость
   servicePercentPrice: 0,  // процентная стоимость услуги
   allServicePrices: 0, // все цены на услуги
   rollback: 66, // откат
-
+  // метод функционала
+  start: function () {
+    this.asking();
+		this.addPrices();
+    this.getFullPrise();
+    this.getServicePercentPrices();
+    this.getTitle();
+    this.logger();
+  },
   asking: function () {
     this.title = prompt("Как называется ваш проект?", "  каЛькуляТор");
-    this.screens = prompt("Какие типы экранов нужно разработать?", "Простые"); 
-  
-    do {
-        this.screenPrice = +prompt("Сколько будет стоить данная работа?", 25000);
-    } while (!this.isNumber(this.screenPrice)) 
+    
+		for (let i = 0; i < 2; i++) {
+			let name = prompt("Какие типы экранов нужно разработать?", "Простые");
+			let price = 0;
+
+			do {
+        price = prompt("Сколько будет стоить данная работа?", 25000);
+    	} while (!this.isNumber(price))
+
+			this.screens.push({id:i, name: name, price: +price});
+		}
+
+    for (let i = 0; i < 2; i++) {
+			let name = prompt("Какой дополнительный тип услуги нужен?", "метрика");
+			let price = 0;
+	
+			do {
+					price = prompt("Сколько это будет стоить?"); // стоимость услуг
+			} while (!this.isNumber(price)) 
+
+			this.services[name] = +price;
+      }
    
     this.adaptive = confirm("Нужен ли адаптив на сайте?");
   },
+	// общая стоимость доа. услуг и экранов
+	addPrices: function () {
+		for (let screen of this.screens) {
+			this.screenPrice += +screen.price
+		}
+
+		for (let key in this.services) {
+			this.allServicePrices += this.services[key];
+		}
+	},
+
   // редактирование название проекта
   getTitle: function () {
-    return this.title.trim()[0].toUpperCase() + this.title.trim().slice(1);
+    this.title = this.title.trim()[0].toUpperCase() + this.title.trim().slice(1).toLowerCase();
   },
+	
   // проверка на число
   isNumber: function (num) {
-    return !isNaN(parseFloat(num)) && isFinite(num)
-  },
-  // общая стоимость доп.услуг
-  getAllServicePrices: function () {
-    let sum = 0;
-  
-    for (let i = 0; i < 2; i++) {
-      let price = 0;
-  
-      if (i === 0) {
-        this.service1 = prompt("Какой дополнительный тип услуги нужен?", "метрика");
-      } else if (i === 1) {
-        this.service2 = prompt("Какой дополнительный тип услуги нужен?", "отправка формы"); 
-      }
-  
-      do {
-          price = prompt("Сколько это будет стоить?"); // стоимость услуг
-      } while (!this.isNumber(price)) 
-  
-      sum += +price; 
-  
-    }
-    
-    return sum 
+    return !isNaN(parseFloat(num)) && isFinite(num);
   },
   // стоимость верстки + доп.услуг
   getFullPrise: function () {
-    return this.screenPrice + this.allServicePrices
+    this.fullPrice = this.screenPrice + this.allServicePrices
   },
   // итоговая стоимость за вычетом процента отката
   getServicePercentPrices: function () {
-    return Math.ceil(this.fullPrice - (this.fullPrice *(this.rollback / 100)));
+    this.servicePercentPrice = Math.ceil(this.fullPrice - (this.fullPrice *(this.rollback / 100)));
   },
   // определение скидки
   getRollbackMassege: function (price) {
@@ -78,15 +91,9 @@ const appData = {
     for (let key in appData) {
       console.log("Ключ: " + key + " " + "Значение: " + appData[key]);
     }
-  },
-  // метод функционала
-  start: function () {
-    this.asking();
-    this.allServicePrices = this.getAllServicePrices();
-    this.fullPrice = this.getFullPrise();
-    this.servicePercentPrice = this.getServicePercentPrices();
-    this.title = this.getTitle();
-    this.logger();
+		console.log(this.fullPrice);
+		console.log(this.servicePercentPrice);
+		console.log(this.screens);
   },
 };
 
