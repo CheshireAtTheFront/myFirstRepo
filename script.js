@@ -20,11 +20,21 @@ const appData = {
     this.logger();
   },
   asking: function () {
-    this.title = prompt("Как называется ваш проект?", "  каЛькуляТор");
+		let name = "";
+
+		do {
+			name = prompt("Как называется ваш проект?", "  каЛькуляТор");
+		} while (!this.isString(name))
     
+		this.title = name;
+
 		for (let i = 0; i < 2; i++) {
-			let name = prompt("Какие типы экранов нужно разработать?", "Простые");
+			let name = "";
 			let price = 0;
+
+			do {
+				name = prompt("Какие типы экранов нужно разработать?", "Простые");
+			} while (!this.isString(name))
 
 			do {
         price = prompt("Сколько будет стоить данная работа?", 25000);
@@ -34,12 +44,16 @@ const appData = {
 		}
 
     for (let i = 0; i < 2; i++) {
-			let name = prompt("Какой дополнительный тип услуги нужен?", "метрика");
+			let name = "";
 			let price = 0;
+
+			do {
+				name = prompt("Какой дополнительный тип услуги нужен?", "метрика");
+			} while (!this.isString(name))
 	
 			do {
 					price = prompt("Сколько это будет стоить?"); // стоимость услуг
-			} while (!this.isNumber(price)) 
+			} while (!this.isNumber(price))  
 
 			this.services[name] = +price;
       }
@@ -61,7 +75,14 @@ const appData = {
   getTitle: function () {
     this.title = this.title.trim()[0].toUpperCase() + this.title.trim().slice(1).toLowerCase();
   },
-	
+	// проверка на строку
+	isString: function (name) {
+		if (isNaN(name)) {
+			return true
+		} else {
+			return false;
+		}
+	},
   // проверка на число
   isNumber: function (num) {
     return !isNaN(parseFloat(num)) && isFinite(num);
