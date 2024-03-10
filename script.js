@@ -49,7 +49,7 @@ const appData = {
 			}
 
   },
-// вопрос о цене на доп услугам
+// вопрос о цене на доп услуги
 	priceOfAdditionalServices: function () {
 		for (let i = 0; i < 2; i++) {
 			let name = "";
@@ -63,7 +63,7 @@ const appData = {
 				price = prompt("Сколько это будет стоить?"); // стоимость услуг
 			} while (!this.isNumber(price))  
 
-			this.services[name] = +price;
+			this.services[name + [i]] = +price;
 	
 			}
 	},
@@ -71,15 +71,21 @@ const appData = {
 	questionAddaptiv: function () {
 		this.adaptive = confirm("Нужен ли адаптив на сайте?");
 	},
-	// общая стоимость доп. услуг и экранов
+	// сумма экранов и доп. услуг
 	addPrices: function () {
-		for (let screen of this.screens) {
-			this.screenPrice += +screen.price
-		}
-
 		for (let key in this.services) {
 			this.allServicePrices += this.services[key];
-		}
+		} 
+
+		let result = this.screens.reduce(function (screenPrice, screen) {
+			return screenPrice + +screen.price
+		}, 0)
+
+		this.screenPrice = result;
+
+		// for (let screen of this.screens) {
+		// 	this.screenPrice += +screen.price
+		// }
 	},
 
   // редактирование название проекта
@@ -125,8 +131,10 @@ const appData = {
     }
 		console.log(this.fullPrice);
 		console.log(this.servicePercentPrice);
+		console.log(this.allServicePrices);
 		console.log(this.screens);
 		console.log(this.services);
+		console.log(this.screenPrice);
   },
 };
 
