@@ -12,55 +12,66 @@ const appData = {
   rollback: 66, // откат
   // метод функционала
   start: function () {
+    this.getTitle();
     this.asking();
+		this.priceOfAdditionalServices();
+		this.questionAddaptiv();
 		this.addPrices();
     this.getFullPrise();
     this.getServicePercentPrices();
-    this.getTitle();
     this.logger();
   },
-  asking: function () {
-		let name = "";
-
+	// название проекта
+	getTitle: function () {
 		do {
-			name = prompt("Как называется ваш проект?", "  каЛькуляТор");
-		} while (!this.isString(name))
-    
-		this.title = name;
+			this.title = prompt("Как называется ваш проект?", "  каЛькуляТор");
+		} while (!this.isString(this.title))
 
+		this.changeTitle(this.title);
+
+	},
+// вопросы по стоимости работы
+  asking: function () {
+			for (let i = 0; i < 2; i++) {
+				let name = "";
+				let price = 0;
+
+				do {
+					name = prompt("Какие типы экранов нужно разработать?", "Простые");
+				} while (!this.isString(name))
+
+				do {
+					price = prompt("Сколько будет стоить данная работа?", 25000);
+				} while (!this.isNumber(price))
+
+				this.screens.push({id: i, name: name, price: +price});
+
+			}
+
+  },
+// вопрос о цене на доп услугам
+	priceOfAdditionalServices: function () {
 		for (let i = 0; i < 2; i++) {
 			let name = "";
 			let price = 0;
-
-			do {
-				name = prompt("Какие типы экранов нужно разработать?", "Простые");
-			} while (!this.isString(name))
-
-			do {
-        price = prompt("Сколько будет стоить данная работа?", 25000);
-    	} while (!this.isNumber(price))
-
-			this.screens.push({id:i, name: name, price: +price});
-		}
-
-    for (let i = 0; i < 2; i++) {
-			let name = "";
-			let price = 0;
-
+	
 			do {
 				name = prompt("Какой дополнительный тип услуги нужен?", "метрика");
 			} while (!this.isString(name))
 	
 			do {
-					price = prompt("Сколько это будет стоить?"); // стоимость услуг
+				price = prompt("Сколько это будет стоить?"); // стоимость услуг
 			} while (!this.isNumber(price))  
 
 			this.services[name] = +price;
-      }
-   
-    this.adaptive = confirm("Нужен ли адаптив на сайте?");
-  },
-	// общая стоимость доа. услуг и экранов
+	
+			}
+	},
+	// вопрос по адаптиву
+	questionAddaptiv: function () {
+		this.adaptive = confirm("Нужен ли адаптив на сайте?");
+	},
+	// общая стоимость доп. услуг и экранов
 	addPrices: function () {
 		for (let screen of this.screens) {
 			this.screenPrice += +screen.price
@@ -72,12 +83,12 @@ const appData = {
 	},
 
   // редактирование название проекта
-  getTitle: function () {
+  changeTitle: function () {
     this.title = this.title.trim()[0].toUpperCase() + this.title.trim().slice(1).toLowerCase();
   },
 	// проверка на строку
-	isString: function (name) {
-		if (isNaN(name)) {
+	isString: function (str) {
+		if (isNaN(str)) {
 			return true
 		} else {
 			return false;
@@ -115,6 +126,7 @@ const appData = {
 		console.log(this.fullPrice);
 		console.log(this.servicePercentPrice);
 		console.log(this.screens);
+		console.log(this.services);
   },
 };
 
