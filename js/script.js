@@ -1,32 +1,41 @@
 "use strict";
-// Получить заголовок "Калькулятор верстки" через метод getElementsByTagName. (тэг h1, получить именно элемент, а не коллекцию)
+// Получить заголовок "Калькулятор верстки" (тэг h1, получить именно элемент, а не коллекцию)
 const heading = document.getElementsByTagName('h1')[0];
 // Получить кнопки "Рассчитать" и "Сброс" 
-const btnClear = document.getElementsByClassName('handler_btn');
+const btnClear = document.getElementsByClassName('handler_btn')[0];
+const btnReset = document.getElementsByClassName('handler_btn')[1];
 // Получить кнопку "+" под выпадающим списком 
 const btnAdd = document.querySelector('.screen-btn');
 /* Получить все элементы с классом other-items в две разные переменные. В первую элементы у которых так же присутствует класс percent, во 
-вторую элементы у которых так же присутствует класс number через метод querySelectorAll.*/
+вторую элементы у которых так же присутствует класс number*/
 const percent = document.querySelectorAll('.other-items.percent');
 const number  = document.querySelectorAll('.other-items.number');
 // Получить input type=range через его родителя с классом rollback одним запросом.
 const range = document.querySelector('.rollback [type="range"]');
 // Получить span с классом range-value через его родителя с классом rollback одним запросом.
 const spanValue = document.querySelector('.rollback .range-value');
-/*Получить все инпуты с классом total-input 
-(класс total-input, получить именно элементы, а не коллекции)*/
-const totalInput = document.getElementsByClassName('main-total__items')[0].querySelectorAll('input');
+// Получить все инпуты с классом total-input 
+const totalInput = document.getElementsByClassName('total-input')[0];
+const totalInput1 = document.getElementsByClassName('total-input')[1];
+const totalInput2 = document.getElementsByClassName('total-input')[2];
+const totalInput3 = document.getElementsByClassName('total-input')[3];
+const totalInput4 = document.getElementsByClassName('total-input')[4];
 // Получить все блоки с классом screen 
 let screen = document.querySelectorAll('.screen');
 
 console.log(heading);
 console.log(btnClear);
+console.log(btnReset);
 console.log(btnAdd);
 console.log(percent);
 console.log(number);
 console.log(range);
 console.log(spanValue);
 console.log(totalInput);
+console.log(totalInput1);
+console.log(totalInput2);
+console.log(totalInput3);
+console.log(totalInput4);
 console.log(screen);
 
 
