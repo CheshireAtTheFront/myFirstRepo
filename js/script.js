@@ -15,11 +15,11 @@ const range = document.querySelector('.rollback [type="range"]');
 // Получить span с классом range-value через его родителя с классом rollback одним запросом.
 const spanValue = document.querySelector('.rollback .range-value');
 // Получить все инпуты с классом total-input 
-const totalInput = document.getElementsByClassName('total-input')[0];
-const totalInput1 = document.getElementsByClassName('total-input')[1];
-const totalInput2 = document.getElementsByClassName('total-input')[2];
-const totalInput3 = document.getElementsByClassName('total-input')[3];
-const totalInput4 = document.getElementsByClassName('total-input')[4];
+const total = document.getElementsByClassName('total-input')[0];
+const totalCount = document.getElementsByClassName('total-input')[1];
+const totalCountOther = document.getElementsByClassName('total-input')[2];
+const totalFullCount = document.getElementsByClassName('total-input')[3];
+const totalCountRollback = document.getElementsByClassName('total-input')[4];
 // Получить все блоки с классом screen 
 let screen = document.querySelectorAll('.screen');
 
@@ -31,11 +31,11 @@ console.log(percent);
 console.log(number);
 console.log(range);
 console.log(spanValue);
-console.log(totalInput);
-console.log(totalInput1);
-console.log(totalInput2);
-console.log(totalInput3);
-console.log(totalInput4);
+console.log(total);
+console.log(totalCount);
+console.log(totalCountOther);
+console.log(totalFullCount);
+console.log(totalCountRollback);
 console.log(screen);
 
 
