@@ -1,6 +1,3 @@
-// prepend(в нутри блока) и before(за блоком) - до
-// append(в нутри блока) и after(за блоком) - после
-
 // взята все блоки книг
 let blokbooks = document.querySelectorAll('.book');
 // взят body
@@ -25,7 +22,7 @@ background.style.backgroundImage = "url(./image/you-dont-know-js.jpg)";
 titleLink.textContent = "Книга 3. this и Прототипы Объектов";
 // добавить текст для элемент li в шетсой книге и поместить его на свое место
 newElemSixthBook.innerHTML = 'Глава 8: За пределами ES6';
-listSixthBook[8].after(newElemSixthBook);
+listSixthBook[8].append(newElemSixthBook);
 // Удалить рекламу со страницы
 adv.remove();
 // Востановить порядок блока книг
