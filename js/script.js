@@ -1,64 +1,41 @@
 "use strict";
-// Получить заголовок "Калькулятор верстки" (тэг h1, получить именно элемент, а не коллекцию)
+
 const heading = document.getElementsByTagName('h1')[0];
-// Получить кнопки "Рассчитать" и "Сброс" 
 const btnClear = document.getElementsByClassName('handler_btn')[0];
 const btnReset = document.getElementsByClassName('handler_btn')[1];
-// Получить кнопку "+" под выпадающим списком 
 const btnAdd = document.querySelector('.screen-btn');
-/* Получить все элементы с классом other-items в две разные переменные. В первую элементы у которых так же присутствует класс percent, во 
-вторую элементы у которых так же присутствует класс number*/
 const percent = document.querySelectorAll('.other-items.percent');
 const number  = document.querySelectorAll('.other-items.number');
-// Получить input type=range через его родителя с классом rollback одним запросом.
 const range = document.querySelector('.rollback [type="range"]');
-// Получить span с классом range-value через его родителя с классом rollback одним запросом.
 const spanValue = document.querySelector('.rollback .range-value');
-// Получить все инпуты с классом total-input 
 const total = document.getElementsByClassName('total-input')[0];
 const totalCount = document.getElementsByClassName('total-input')[1];
 const totalCountOther = document.getElementsByClassName('total-input')[2];
 const totalFullCount = document.getElementsByClassName('total-input')[3];
 const totalCountRollback = document.getElementsByClassName('total-input')[4];
-// Получить все блоки с классом screen 
+
 let screen = document.querySelectorAll('.screen');
-
-console.log(heading);
-console.log(btnClear);
-console.log(btnReset);
-console.log(btnAdd);
-console.log(percent);
-console.log(number);
-console.log(range);
-console.log(spanValue);
-console.log(total);
-console.log(totalCount);
-console.log(totalCountOther);
-console.log(totalFullCount);
-console.log(totalCountRollback);
-console.log(screen);
-
 
 const appData = {
   title: "",
-  screens: [], // тип экрана
-  screenPrice: 0, // цена верстки
+  screens: [],
+  screenPrice: 0,
   adaptive: true,
-  services: {}, // услуги
-  fullPrice: 0, // итоговая стоимость
-  servicePercentPrice: 0,  // процентная стоимость услуги
-  allServicePrices: 0, // все цены на услуги
-  rollback: 66, // откат
+  services: {},
+  fullPrice: 0,
+  servicePercentPrice: 0,
+  allServicePrices: 0,
+  rollback: 66, 
   // метод функционала
   start: function () {
-    // this.getTitle();
-    // this.asking();
-		// this.priceOfAdditionalServices();
-		// this.questionAddaptiv();
-		// this.addPrices();
-    // this.getFullPrise();
-    // this.getServicePercentPrices();
-    // this.logger();
+    this.getTitle();
+    this.asking();
+		this.priceOfAdditionalServices();
+		this.questionAddaptiv();
+		this.addPrices();
+    this.getFullPrise();
+    this.getServicePercentPrices();
+    this.logger();
   },
 	// название проекта
 	getTitle: function () {
@@ -99,7 +76,7 @@ const appData = {
 			} while (!this.isString(name))
 	
 			do {
-				price = prompt("Сколько это будет стоить?"); // стоимость услуг
+				price = prompt("Сколько это будет стоить?"); 
 			} while (!this.isNumber(price))  
 
 			this.services[name + [i]] = +price;
