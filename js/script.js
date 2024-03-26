@@ -32,9 +32,45 @@ const appData = {
 	servicesPercent: {},
 	servicesNumber: {},
 
+	init: function() {
+		appData.addTitle();
+
+		btnStart.addEventListener('click', appData.start);
+		btnAdd.addEventListener('click', appData.addScreenBlock);
+		inputRange.addEventListener('input', appData.sliderValueChanges);
+		inputRange.addEventListener('change', appData.sliderValueChanges);
+		inputRange.addEventListener('change', appData.addRangeInRollback);
+	},
+
+	checkingCompletedData: function() {
+		screens = appData.getScreen();	
+
+		let isCorrect = false;
+			
+		screens.forEach(function(screen){
+			const select = screen.querySelector('select');
+			const input = screen.querySelector('input');
+			
+			if(select.value === "" || input.value === "") {
+				isCorrect = true;
+			} 
+		})
+		return !isCorrect
+	},
+
 	addTitle: function() {
 		document.title = title.textContent;
 	},
+
+	start: function() {
+		if(appData.checkingCompletedData()) {
+			appData.addScreens();
+			appData.addServices();
+			appData.addPrices();
+    	// this.logger();
+			appData.showResult();
+		}
+  },
 
 	getScreen: () => {
 		return document.querySelectorAll('.screen');
@@ -48,7 +84,7 @@ const appData = {
 	},
 
 	addRangeInRollback: function() {
-		this.rollback = inputRange.value;
+		appData.rollback = inputRange.value;
 	},
 
 	sliderValueChanges: function(event) {
@@ -61,32 +97,17 @@ const appData = {
 		totalFullCount.value = this.fullPrice;
 	},
 
-	checkingCompletedData: function() {
-		screens = appData.getScreen();
-		screens.forEach((screen) => {
-			const select = screen.querySelector('select');
-			const input = screen.querySelector('input');
-			if(select.value === "" || +input.value === 0) {
-				btnStart.style.disabled = "true";
-				btnStart.style.backgroundColor = "#f0f0f0";
-			} else {
-				btnStart.style.disabled = "false";
-				btnStart.style.backgroundColor = "#A52A2A";
-			}
-		});
-	},
-
 	addScreenBlock: function() {
-		const cloneScreen = screens[screens.length - 1].cloneNode(true);
 		screens = appData.getScreen();
+		const cloneScreen = screens[screens.length - 1].cloneNode(true);
 		appData.resetScreenBlock(cloneScreen);
 		screens[screens.length - 1].after(cloneScreen);
-		appData.checkingCompletedData();
 	},
 
 	addScreens: function() {
 		appData.screens = [];
 		screens = appData.getScreen();
+
 		screens.forEach(function(screen, index) {
 			const select = screen.querySelector('select');
 			const input = screen.querySelector('input');
@@ -99,7 +120,6 @@ const appData = {
 				count: +input.value,
 			});
 		})
-		appData.checkingCompletedData();
 	},
 
 	addServices: function() {
@@ -165,24 +185,6 @@ const appData = {
       console.log("Ключ: " + key + " " + "Значение: " + appData[key]);
     }
   },
-
-	start: function() {
-		appData.addScreens();
-		appData.addServices();
-		appData.addPrices();
-    // this.logger();
-		appData.showResult();
-  },
-
-	init: function() {
-		this.addTitle()
-		this.checkingCompletedData();
-		btnStart.addEventListener('click', this.start);
-		btnAdd.addEventListener('click', this.addScreenBlock);
-		inputRange.addEventListener('input', this.sliderValueChanges);
-		inputRange.addEventListener('change', this.sliderValueChanges);
-		inputRange.addEventListener('change', this.addRangeInRollback);
-	},
 };
 
 appData.init();
